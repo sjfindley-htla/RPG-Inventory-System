@@ -82,7 +82,9 @@ public abstract class Bags {
     }
 
 
-
+    public void emptyBag() {
+        storage.clear();
+    }
 
 
 

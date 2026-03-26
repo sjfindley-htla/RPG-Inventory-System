@@ -48,5 +48,9 @@ public class Main {
 
         //lists all items currently in the bag again
         System.out.println(satchel.storage.values());
+
+        //empties bag
+        satchel.emptyBag();
+        System.out.println(satchel.storage.values());
     }
 }

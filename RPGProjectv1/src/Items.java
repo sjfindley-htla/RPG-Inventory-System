@@ -25,7 +25,7 @@ public abstract class Items {
                 stats="NAME: "+name.name+"\n"+"ITEM TYPE: "+name.itemType+"\n"+"DESC: "+name.desc+"\n"+"WEIGHT: "+name.weight+"kg\n"+"EFFECT: "+name.useMessage+"\n";
                 return stats;
             case "Projectile":
-                stats="NAME: "+name.name+"\n"+"ITEM TYPE: "+name.itemType+"\n"+"DESC: "+name.desc+"\n"+"WEIGHT: "+name.weight+"kg\n"+"QUANTITY: "+name.quantity+"\n";
+                stats="NAME: "+name.name+"\n"+"ITEM TYPE: "+name.itemType+"\n"+"DESC: "+name.desc+"\n"+"WEIGHT (COMBINED): "+name.weight+"kg\n"+"QUANTITY: "+name.quantity+"\n";
                 return stats;
             case "Quest Item":
                 stats="NAME: "+name.name+"\n"+"ITEM TYPE: "+name.itemType+"\n"+"DESC: "+name.desc+"\n"+"WEIGHT: "+name.weight+"kg\n";
