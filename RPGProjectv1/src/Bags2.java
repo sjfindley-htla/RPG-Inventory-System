@@ -21,21 +21,27 @@ public abstract class Bags2{
     }
 
     public void useItem(Items name, int slot) {
-        if (!name.usable) {
-            return;
-        } else {
-            if (name.itemType.equals("Weapon")) {
+        switch(name.itemType) {
+            case "Weapon":
                 System.out.println(Items.Weapons.damageMessage);
-            } else if (name.itemType.equals("Consumable")) {
+                break;
+            case "Consumable":
                 System.out.println(Items.Consumables.useMessage);
                 removeItem(name,slot);
-            } else if (name.itemType.equals("Projectile")) {
+                break;
+            case "Projectile":
                 if (name.quantity>0) {
                     name.quantity=name.quantity-1;
+                    if (name.quantity==0) {
+                        removeItem(name,slot);
+                    }
                 } else {
                     removeItem(name,slot);
                 }
-            }
+                break;
+            default:
+                System.out.println(name.name+" is not able to be used");
+                return;
         }
     }
 
@@ -46,7 +52,13 @@ public abstract class Bags2{
     public double checkWeight(){
         double currentWeight=0d;
         for (int i=1;i<=storage.size();i++) {
-            currentWeight=currentWeight+storage.get(i).weight;
+            if (storage.containsKey(i)) {
+                currentWeight = currentWeight + storage.get(i).weight;
+            } else if (storage.containsKey(i+1)) {
+                currentWeight=currentWeight+storage.get(i+1).weight;
+            } else {
+                currentWeight=currentWeight;
+            }
         }
         return currentWeight;
     }
