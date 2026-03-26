@@ -6,15 +6,38 @@ public abstract class Items {
     public int quantity=0;
     public String itemType="";
 
+    public int damage=4;
+    public String damageMessage="You hit for "+damage+" damage";
+    public String useMessage="";
+
+
     public Items(){
 
     }
 
+    public static String displayStats(Items name) {
+        String stats="";
+        switch(name.itemType) {
+            case "Weapon":
+                stats="NAME: "+name.name+"\n"+"ITEM TYPE: "+name.itemType+"\n"+"DESC: "+name.desc+"\n"+"WEIGHT: "+name.weight+"kg\n"+"POWER: "+name.damage+" damage\n";
+                return stats;
+            case "Consumable":
+                stats="NAME: "+name.name+"\n"+"ITEM TYPE: "+name.itemType+"\n"+"DESC: "+name.desc+"\n"+"WEIGHT: "+name.weight+"kg\n"+"EFFECT: "+name.useMessage+"\n";
+                return stats;
+            case "Projectile":
+                stats="NAME: "+name.name+"\n"+"ITEM TYPE: "+name.itemType+"\n"+"DESC: "+name.desc+"\n"+"WEIGHT: "+name.weight+"kg\n"+"QUANTITY: "+name.quantity+"\n";
+                return stats;
+            case "Quest Item":
+                stats="NAME: "+name.name+"\n"+"ITEM TYPE: "+name.itemType+"\n"+"DESC: "+name.desc+"\n"+"WEIGHT: "+name.weight+"kg\n";
+                return stats;
+            default:
+                stats="error - item does not exist, or no item type is applied to it";
+                return stats;
+        }
+    }
+
 
     public static class Weapons extends Items {
-        public static int damage=4;
-        public static String damageMessage="You hit for "+damage+" damage";
-
         public Weapons() {
             this.quantity=1;
             this.usable=true;
@@ -32,12 +55,13 @@ public abstract class Items {
     }
 
     public static class Consumables extends Items {
-        public static String useMessage="";
-
         public Consumables() {
             this.usable=true;
             this.itemType="Consumable";
             this.quantity=1;
+
+            this.damageMessage="";
+            this.damage=0;
         }
 
         public static class HealthPotion extends Consumables {
@@ -47,7 +71,7 @@ public abstract class Items {
                 this.name="Health Potion";
                 this.desc="Heals for +"+heal+" hp";
                 this.weight=0.2d;
-                this.useMessage="You were healed for +"+heal+" hp";
+                this.useMessage="You heal for +"+heal+" hp";
             }
         }
     }

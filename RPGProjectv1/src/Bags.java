@@ -22,10 +22,10 @@ public abstract class Bags {
     public void useItem(Items name, int slot) {
         switch(name.itemType) {
             case "Weapon":
-                System.out.println(Items.Weapons.damageMessage);
+                System.out.println(name.damageMessage);
                 break;
             case "Consumable":
-                System.out.println(Items.Consumables.useMessage);
+                System.out.println(name.useMessage);
                 removeItem(name,slot);
                 break;
             case "Projectile":
