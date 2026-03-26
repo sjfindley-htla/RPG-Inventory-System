@@ -29,11 +29,8 @@ public class Main {
         System.out.println(satchel.showNames(0));
         System.out.println(satchel.checkWeight());
 
-        sword.useItem();
-        healthPot.useItem();
-        System.out.println(satchel.storage.values());
+        satchel.useItem(sword,1);
         satchel.useItem(healthPot,2);
         System.out.println(satchel.storage.values());
-
     }
 }

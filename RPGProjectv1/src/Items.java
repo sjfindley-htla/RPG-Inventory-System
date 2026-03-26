@@ -3,31 +3,20 @@ public abstract class Items {
     public String desc="";
     public double weight=0d;
     public boolean usable=false;
+    public int quantity=0;
     public String itemType="";
 
     public Items(){
 
     }
 
-    public void useItem() {
-        if (!usable) {
-            return;
-        } else {
-            if (itemType.equals("Weapon")) {
-                System.out.println(Weapons.damageMessage);
-            } else if (itemType.equals("Consumable")) {
-                System.out.println(Consumables.useMessage);
-                Consumables.used=true;
-            }
-        }
-    }
-
 
     public static class Weapons extends Items {
-        public static int damage=0;
+        public static int damage=4;
         public static String damageMessage="You hit for "+damage+" damage";
 
         public Weapons() {
+            this.quantity=1;
             this.usable=true;
             this.itemType="Weapon";
         }
@@ -36,9 +25,17 @@ public abstract class Items {
         public static class Sword extends Weapons {
             public Sword() {
                 this.name="Sword";
-                this.desc="Long iron blade attached to a wooden hilt";
+                this.desc="Used to deal melee damage.";
                 this.weight=1.4d;
-                damage=4;
+            }
+        }
+
+        public static class Bow extends Weapons {
+            public Bow() {
+                this.name="Bow";
+                this.desc="Used to shoot arrows, dealing ranged damage.";
+                this.weight=0.8d;
+                damage=2;
             }
         }
 
@@ -46,11 +43,11 @@ public abstract class Items {
 
     public static class Consumables extends Items {
         public static String useMessage="";
-        public static boolean used=false;
 
         public Consumables() {
             this.usable=true;
             this.itemType="Consumable";
+            this.quantity=1;
         }
 
         public static class HealthPotion extends Consumables {
@@ -65,8 +62,23 @@ public abstract class Items {
         }
     }
 
-    public class Projectile extends Items {
+    public static class Projectiles extends Items {
+        public Projectiles() {
 
+        }
+        public Projectiles(int quantity) {
+            this.usable=true;
+            this.itemType="Projectile";
+            this.quantity=quantity;
+        }
+
+        public static class Arrow extends Projectiles {
+            public Arrow() {
+                this.name="Arrow";
+                this.desc="Shot through bow.";
+                this.weight=0.02d;
+            }
+        }
     }
 
     public class QuestItem extends Items {

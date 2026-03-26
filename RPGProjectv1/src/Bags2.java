@@ -28,9 +28,8 @@ public abstract class Bags2{
                 System.out.println(Items.Weapons.damageMessage);
             } else if (name.itemType.equals("Consumable")) {
                 System.out.println(Items.Consumables.useMessage);
-                Items.Consumables.used=true;
+                removeItem(name,slot);
             }
-            removeItem(name,slot);
         }
     }
 
