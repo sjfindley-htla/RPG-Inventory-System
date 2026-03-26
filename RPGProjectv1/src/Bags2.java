@@ -29,6 +29,12 @@ public abstract class Bags2{
             } else if (name.itemType.equals("Consumable")) {
                 System.out.println(Items.Consumables.useMessage);
                 removeItem(name,slot);
+            } else if (name.itemType.equals("Projectile")) {
+                if (name.quantity>0) {
+                    name.quantity=name.quantity-1;
+                } else {
+                    removeItem(name,slot);
+                }
             }
         }
     }

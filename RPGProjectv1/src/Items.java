@@ -29,16 +29,6 @@ public abstract class Items {
                 this.weight=1.4d;
             }
         }
-
-        public static class Bow extends Weapons {
-            public Bow() {
-                this.name="Bow";
-                this.desc="Used to shoot arrows, dealing ranged damage.";
-                this.weight=0.8d;
-                damage=2;
-            }
-        }
-
     }
 
     public static class Consumables extends Items {
@@ -64,7 +54,8 @@ public abstract class Items {
 
     public static class Projectiles extends Items {
         public Projectiles() {
-
+            this.usable=true;
+            this.itemType="Projectile";
         }
         public Projectiles(int quantity) {
             this.usable=true;
@@ -72,16 +63,29 @@ public abstract class Items {
             this.quantity=quantity;
         }
 
-        public static class Arrow extends Projectiles {
-            public Arrow() {
-                this.name="Arrow";
-                this.desc="Shot through bow.";
-                this.weight=0.02d;
+        public static class Snowball extends Projectiles {
+            public Snowball(int quantity) {
+                this.name="Snowball";
+                this.desc="Thrown for fun.";
+                this.weight=0.02d*quantity;
+                this.quantity=quantity;
             }
         }
     }
 
-    public class QuestItem extends Items {
+    public static class QuestItem extends Items {
+        public QuestItem() {
+            this.usable=false;
+            this.itemType="Quest Item";
+            this.quantity=1;
+        }
 
+        public static class Key extends QuestItem {
+            public Key() {
+                this.name="Key";
+                this.desc="Opens a door... somewhere.";
+                this.weight=0.3d;
+            }
+        }
     }
 }
