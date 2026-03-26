@@ -1,9 +1,7 @@
-import java.util.Scanner;
-
 public class Main {
     public static void main(String[] args) {
         //make bag exist
-        Bags2 satchel = new Bags2.SmallBag();
+        Bags satchel = new Bags.SmallBag();
 
         //make items exist
         Items sword = new Items.Weapons.Sword();

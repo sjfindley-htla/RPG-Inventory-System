@@ -1,62 +1,73 @@
 import java.util.HashMap;
-import java.util.Collection;
 import java.util.Map;
 
-public abstract class Bags{
+public abstract class Bags {
     public double maxWeight = 15d;
-    public int maxRoom = 10;
-    public int maxCapacity=15;
     public boolean full=false;
 
-    HashMap<String, Double> storageW = new HashMap<>();
-    HashMap<String, Integer> storageS = new HashMap<>();
-    HashMap<Integer, String> storageSlots = new HashMap<>();
+    HashMap<Integer, Items> storage = new HashMap<>();
 
     public Bags() {
 
     }
-    public void addItem(String name, double weight, int space, int slot) {
+    public void addItem(Items name, int slot) {
         bagFull();
         if (!full) {
-            storageW.putIfAbsent(name, weight);
-            storageS.putIfAbsent(name, space);
-            storageSlots.putIfAbsent(slot, name);
+            storage.putIfAbsent(slot, name);
         } else if (full) {
             System.out.println("Bag is full! "+name+" was not added to bag");
         }
     }
 
-    public void removeItem(String name) {
-        storageW.remove(name);
-        storageS.remove(name);
-    }
-
-    public double checkWeight(String name){
-        return storageW.get(name);
-    }
-
-    public int checkSpace(String name) {
-        return storageS.get(name);
-    }
-
-    public int checkSlots() {
-        return maxCapacity-storageSlots.size();
-    }
-
-    public double calculateWeight() {
-        double currentW=0d;
-
-        for (Map.Entry<String, Double> weightCalc : storageW.entrySet()) {
-            currentW=currentW+weightCalc.getValue();
+    public void useItem(Items name, int slot) {
+        switch(name.itemType) {
+            case "Weapon":
+                System.out.println(Items.Weapons.damageMessage);
+                break;
+            case "Consumable":
+                System.out.println(Items.Consumables.useMessage);
+                removeItem(name,slot);
+                break;
+            case "Projectile":
+                if (name.quantity>0) {
+                    name.quantity=name.quantity-1;
+                    if (name.quantity==0) {
+                        removeItem(name,slot);
+                    }
+                } else {
+                    removeItem(name,slot);
+                }
+                break;
+            default:
+                System.out.println(name.name+" is not able to be used");
+                return;
         }
-        return currentW;
     }
+
+    public void removeItem(Items name, int slot) {
+        storage.remove(slot,name);
+    }
+
+    public double checkWeight(){
+        double currentWeight=0d;
+        for (int i=1;i<=storage.size();i++) {
+            if (storage.containsKey(i)) {
+                currentWeight = currentWeight + storage.get(i).weight;
+            } else if (storage.containsKey(i+1)) {
+                currentWeight=currentWeight+storage.get(i+1).weight;
+            } else {
+                currentWeight=currentWeight;
+            }
+        }
+        return currentWeight;
+    }
+
 
     public String showNames(int breakNum) {
         String currentName="";
         int timesRun=0;
-        for (Map.Entry<Integer, String> listNames : storageSlots.entrySet()) {
-            currentName=listNames.getValue();
+        for (Map.Entry<Integer, Items> listNames : storage.entrySet()) {
+            currentName=listNames.getValue().name;
             if (timesRun>=breakNum) {
                 return currentName;
             }
@@ -65,10 +76,7 @@ public abstract class Bags{
         return currentName;
     }
     public void bagFull() {
-        if (checkSlots()==0) {
-            full=true;
-        }
-        if (calculateWeight()>=maxWeight) {
+        if (checkWeight()>=maxWeight) {
             full=true;
         }
     }
@@ -81,15 +89,11 @@ public abstract class Bags{
     public static class SmallBag extends Bags {
         public SmallBag() {
             this.maxWeight=5d;
-            this.maxRoom=4;
-            this.maxCapacity=6;
         }
     }
     public static class MediumBag extends Bags {
         public MediumBag() {
             this.maxWeight=10d;
-            this.maxRoom=6;
-            this.maxCapacity=10;
         }
     }
     public static class LargeBag extends Bags {
